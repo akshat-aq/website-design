@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Scrolling Design Mock</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f0f0;
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .scroll-container {
+      width: 80%;
+      height: 80vh;
+      overflow-y: scroll;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      background: #fff;
+    }
+
+    .design {
+      width: 100%;
+      height: auto;
+    }
+
+    .arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: #007bff;
+      color: #fff;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 50%;
+      font-size: 18px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .arrow:hover {
+      background: #0056b3;
+    }
+
+    .arrow-left {
+      left: 10px;
+    }
+
+    .arrow-right {
+      right: 10px;
+    }
+
+    .arrow:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <button class="arrow arrow-left" id="prev" disabled>&larr;</button>
+    <div class="scroll-container" id="scroll-container">
+      <img src="1.png" alt="Design 1" class="design">
+      <img src="2.png" alt="Design 2" class="design" style="display: none;">
+      <!-- Add more images here -->
+    </div>
+    <button class="arrow arrow-right" id="next">&rarr;</button>
+  </div>
+
+  <script>
+    const images = document.querySelectorAll('.design');
+    const prevButton = document.getElementById('prev');
+    const nextButton = document.getElementById('next');
+    let currentIndex = 0;
+
+    function updateImages() {
+      images.forEach((img, index) => {
+        img.style.display = index === currentIndex ? 'block' : 'none';
+      });
+
+      prevButton.disabled = currentIndex === 0;
+      nextButton.disabled = currentIndex === images.length - 1;
+    }
+
+    prevButton.addEventListener('click', () => {
+      if (currentIndex > 0) {
+        currentIndex--;
+        updateImages();
+      }
+    });
+
+    nextButton.addEventListener('click', () => {
+      if (currentIndex < images.length - 1) {
+        currentIndex++;
+        updateImages();
+      }
+    });
+
+    updateImages(); // Initialize the image display
+  </script>
+</body>
+</html>
